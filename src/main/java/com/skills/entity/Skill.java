@@ -2,24 +2,24 @@ package com.skills.entity;
 
 public class Skill {
 
-    private long id;
+    private Long id;
     private String name;
     private int progress;
 
     public Skill() {
     }
 
-    public Skill(long id, String name, int progress) {
+    public Skill(Long id, String name, int progress) {
         this.id = id;
         this.name = name;
         this.progress = progress;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

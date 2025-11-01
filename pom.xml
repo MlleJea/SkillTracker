@@ -17,9 +17,9 @@
     </parent>
 
     <properties>
-        <java.version>23</java.version>
-        <maven.compiler.source>23</maven.compiler.source>
-        <maven.compiler.target>23</maven.compiler.target>
+        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <karate.version>1.4.1</karate.version>
         <playwright.version>1.40.0</playwright.version>
     </properties>
