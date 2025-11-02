@@ -25,8 +25,12 @@ public class SkillController {
         if (name == null || name.trim().isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
-        Skill skill = skillService.createSkill(name);
-        return ResponseEntity.status(HttpStatus.CREATED).body(skill);
+        try {
+            Skill skill = skillService.createSkill(name);
+            return ResponseEntity.status(HttpStatus.CREATED).body(skill);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build(); // 409 Conflict
+        }
     }
 
     @GetMapping

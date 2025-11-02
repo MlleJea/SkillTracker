@@ -31,7 +31,7 @@ Feature: Skill Tracker API Test
     Scenario: Récupérer un skill par son Id
     #On crée d'abord un skill
     Given path apiPath
-    And request {name: 'React'}
+    And request {name: 'Java'}
     When method post
     Then status 201
     * def skillId = response.id

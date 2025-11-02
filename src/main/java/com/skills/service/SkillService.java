@@ -15,6 +15,13 @@ public class SkillService {
     private final AtomicLong idCounter = new AtomicLong(1);
 
     public Skill createSkill(String name) {
+        boolean exists = skills.stream()
+                .anyMatch(s -> s.getName().equalsIgnoreCase(name));
+
+        if (exists) {
+            throw new IllegalArgumentException("Une skill avec ce nom existe déjà");
+        }
+
         Long id = idCounter.getAndIncrement();
         Skill skill = new Skill(id,name, 0);
         skills.add(skill);
