@@ -25,17 +25,13 @@ public class SkillController {
         if (name == null || name.trim().isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
-        try {
             Skill skill = skillService.createSkill(name);
             return ResponseEntity.status(HttpStatus.CREATED).body(skill);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build(); // 409 Conflict
-        }
     }
 
     @GetMapping
     public ResponseEntity<List<Skill>> getAllSkills() {
-        return ResponseEntity.ok(skillService.getAllSkils());
+        return ResponseEntity.ok(skillService.getAllSkills());
     }
 
     @GetMapping("/{id}")
@@ -58,9 +54,15 @@ public class SkillController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @DeleteMapping
+    public ResponseEntity<Void> deleteAllSkills() {
+        skillService.deleteAllSkills();
+        return ResponseEntity.noContent().build();
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSkill(@PathVariable Long id) {
-        boolean deleted = skillService.deleteSkillById(id);
+        boolean deleted = skillService.deleteSkill(id);
         return deleted ? ResponseEntity.noContent().build()
                 : ResponseEntity.notFound().build();
     }

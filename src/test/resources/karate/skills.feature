@@ -3,6 +3,9 @@ Feature: Skill Tracker API Test
     Background:
     * url 'http://localhost:8080'
     * def apiPath = '/api/skills'
+    Given path apiPath
+        When method delete
+        Then status 204
 
     Scenario: Créér un nouveau skill
     Given path apiPath
