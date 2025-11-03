@@ -1,6 +1,7 @@
 package com.playwright;
 
 import com.microsoft.playwright.*;
+import com.skills.controller.SkillController;
 import org.junit.jupiter.api.*;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
@@ -10,6 +11,7 @@ public class SkillsUITest {
     private static Browser browser;
     private BrowserContext context;
     private Page page;
+    private SkillController skillController;
 
     private void cleanupSkills() {
         try {
@@ -61,10 +63,40 @@ public class SkillsUITest {
 
     @Test
     @DisplayName("Test 2 : Créér un nouveau skill")
-    void createNewSkill(){
+    void testCreateNewSkill(){
         page.fill("input[placeholder*='Nouvelle compétence']", "Playwright Testing");
         page.click("button:has-text('Ajouter')");
         assertThat(page.locator("text=Playwright Testing")).isVisible();
         assertThat(page.locator(".skill-card:has-text('Playwright Testing') .progress-text")).containsText("0%");
     }
+
+    @Test
+    @DisplayName("Test 3: Augmenter le progrès d'un skill")
+    void testUpdateProgress(){
+        page.fill("input[placeholder*='Nouvelle compétence']","React");
+        page.click("button:has-text('Ajouter')");
+
+        page.waitForSelector("text=React");
+        for (int i = 0; i < 3; i++) {
+            page.click(".skill-card:has-text('React') button:has-text('+10%')");
+            page.waitForTimeout(500);
+        }
+
+        assertThat(page.locator(".skill-card:has-text('React') .progress-text")).containsText("30%");
+    }
+
+    @Test
+    @DisplayName("Test 4: Supprimer un skill")
+    void deleteSkill(){
+        page.fill("input[placeholder*='Nouvelle compétence']","Karate");
+        page.click("button:has-text('Ajouter')");
+        page.waitForSelector("text=Karate");
+
+        page.onDialog(dialog -> dialog.accept());
+        page.click(".skill-card:has-text('Karate') button:has-text('Supprimer')");
+        page.waitForTimeout(500);
+        assertThat(page.locator("text=Karate")).not().isVisible();
+    }
+
+
 }
